@@ -1,0 +1,12 @@
+{
+  "name":     "Servo-moteur",
+  "author":   "Manuel CQE",
+  "version":  "0.0.1",
+  "description": "Servo moteur + NodeJS + Socke.io + Jhonny-five + Arduino",  
+  "dependencies": {
+    "express": "~4.0",
+    "socket.io":">= 1.0.2",
+    "johnny-five": "latest",
+    "serialport": "1.4.10"
+  }
+}

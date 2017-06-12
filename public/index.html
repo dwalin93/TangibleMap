@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <style>
+        body {
+ font-family: Times, serif; 
+ font-size: 110%;
+ line-height: 1.5;
+}
+        .button {
+            display: inline-block;
+            padding: 8px 15px;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: black;
+            background-color: #4CAF50;
+            border-color: grey;
+            border-radius: 12px;
+            box-shadow: 0 7px #999;
+        }
+
+        .button:hover {
+            background-color: #3e8e41
+        }
+
+        .button:active {
+            background-color: #3e8e41;
+            box-shadow: 0 4px #666;
+            transform: translateY(4px);
+        }
+
+        .container_All {
+            padding: 50px 20px 20px;
+            background-color:#ffffff; 
+            margin-left:10%; 
+            padding-left:10px; 
+            padding-top:10px; 
+            padding-bottom:1px; 
+            border: 1px solid black;  
+            width:70%;
+            box-shadow: 10px 10px 5px #888888;
+            margin-top: 20px;
+
+        }
+
+        .div_result {
+            padding: 10px 10px 10px 10px;
+            margin-bottom: 10px;
+            background-color: lightgrey;
+        }
+        
+        
+
+    </style>
+
+    <body>
+        <div class="container_All">
+            yPin <input type="text" id="yPIN" value="3" size="5"> <br>
+            xPin <input type="text" id="xPIN" value="3" size="5"> <br>
+            Winkel <input id="angle_txt" type="text" value="90" min="0" max="170" size="5">
+            <p><input type="file" id="file-input"></p>
+            
+        </div>
+            <div class="container_All">
+
+            <input class="button" type="submit" onclick="verarbeite()" id="verarbeite" value="verarbeite" style="background-color:lightyellow">
+            <input class="button" type="submit" onclick="analysiere()" id="analysiere" value="analysiere" style="background-color:lightgreen">
+            <input class="button" type="submit" onclick="erstelleMap()" id="erstelle_map" value="erstelle_map" style="background-color:lightblue">
+                <br><br>
+            <div class="div_result">
+                <p>Ergebnis:</p>
+                <table id="Result"></table>
+                <br>
+            </div>
+            <div id="Images" width="100%">
+                <img id="img" src="" >
+                <canvas id="canvas"></canvas>
+
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
+        <!--    <script src="js/load-image.all.min.js"></script>    -->
+        <!--    <script src="color-thief.js"></script>  -->
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/client.js" type="text/javascript"></script>
+        <script src="/js/maxColor.js" type="text/javascript"></script>
+        <script src="/js/canvasImg.js" type="text/javascript"></script>
+        <script src="/js/fileInput.js" type="text/javascript"></script>
+        <script>
+            $("#verarbeite")
+                .hide();
+            $("#analysiere")
+                .hide();
+            $("#erstelle_map")
+                .hide();
+
+        </script>
+
+    </body>
+
+</html>
