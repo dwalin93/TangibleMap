@@ -22,7 +22,7 @@ app.get('/', function (req, res) {
 
 server.listen(3000, "127.0.0.1");
 
-board = new five.Board();
+/*board = new five.Board();
 
 board.on("ready", function() {
 
@@ -57,3 +57,4 @@ board.on("ready", function() {
 });
 
 
+*/

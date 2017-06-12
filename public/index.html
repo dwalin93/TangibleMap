@@ -61,21 +61,22 @@
 
     <body>
         <div class="container_All">
-            yPin <input type="text" id="yPIN" value="3" size="5"> <br>
+            yPin <input type="text" id="yPIN" value="3" size="5"> 
             xPin <input type="text" id="xPIN" value="3" size="5"> <br>
-            Winkel <input id="angle_txt" type="text" value="90" min="0" max="170" size="5">
+            <input type="checkbox" id="weiß" value="TEST"> 
+            Weiß <b>nicht</b> berücksichtigen<br>
             <p><input type="file" id="file-input"></p>
             
         </div>
-            <div class="container_All">
+            <div class="container_All" id="div_result">
 
             <input class="button" type="submit" onclick="verarbeite()" id="verarbeite" value="verarbeite" style="background-color:lightyellow">
             <input class="button" type="submit" onclick="analysiere()" id="analysiere" value="analysiere" style="background-color:lightgreen">
             <input class="button" type="submit" onclick="erstelleMap()" id="erstelle_map" value="erstelle_map" style="background-color:lightblue">
                 <br><br>
-            <div class="div_result">
-                <p>Ergebnis:</p>
-                <table id="Result"></table>
+            <div class="div_result" id="result">
+                <table id="Result">Ergebnis:</table>
+                <table id="Legende">Legende:</table>
                 <br>
             </div>
             <div id="Images" width="100%">
@@ -98,6 +99,11 @@
             $("#analysiere")
                 .hide();
             $("#erstelle_map")
+                .hide();
+            $("#result")
+                .hide();
+
+            $("#div_result")
                 .hide();
 
         </script>

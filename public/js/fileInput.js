@@ -2,6 +2,7 @@ console.log("fileInput is running...")
 var fileInput = document.getElementById('file-input');
 var fileDisplayArea = document.getElementById('img');
 fileInput.addEventListener('change', function (e) {
+    try{
     $("#verarbeite")
         .show()
     $('#erstelle_map')
@@ -12,6 +13,10 @@ fileInput.addEventListener('change', function (e) {
         .show()
     $("#canvas")
         .hide()
+    $("#result")
+        .hide()
+    $("#div_result")
+                .hide();
     
     
     var file = fileInput.files[0];
@@ -22,8 +27,13 @@ fileInput.addEventListener('change', function (e) {
             fileDisplayArea.src = reader.result;
             fileDisplayArea.id = "img";
         }
+        
+            $("#div_result")
+                .show();
         reader.readAsDataURL(file);
     } else {
         fileDisplayArea.innerHTML = "File not supported!"
     }
-});
+}catch(err){
+    console.log("Es wurde keine Datei ausgewählt")
+      }});

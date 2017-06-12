@@ -5,21 +5,24 @@ var maxColor = function (colorArray) {
     var pixelArray = colorArray;
     var anzahlimageMatrix = new Array;
     var imagematrixKlein = new Array;
+    var weiß = $('#weiß').is(':checked')
     for (var x = 0; x < pixelArray.length; x++) {
+        
         a = imagematrixKlein.indexOf(pixelArray[x]);
+        if(weiß && (pixelArray[x]=="255,255,255")){    
+            }else{
         if (a === -1) {
             imagematrixKlein.push(pixelArray[x]);
             anzahlimageMatrix.push(1);
         } else {
+            
             anzahlimageMatrix[a] = anzahlimageMatrix[a] + 1;
             if (anzahlimageMatrix[a] >= (pixelArray.length / 2)) {
                 console.log("mehr als 50%")
                 return [imagematrixKlein[a], ">= 50"];
             }
-        }
-        if (a > imagematrixKlein.length) {
-            console.log("HIER!!!!")
-        }
+        }}
+        
     }
     var HöchsteZahl = Math.max(...anzahlimageMatrix)
     var r = anzahlimageMatrix.indexOf(HöchsteZahl);

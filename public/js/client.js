@@ -78,6 +78,7 @@ var analysiere = function () {
         .remove();
     var imagematrixKlein = new Array;
     var imagematrixGroß = new Array;
+    var imageLegend = new Array;
     var xPin = document.getElementById("xPIN")
         .value;
     var yPin = document.getElementById("yPIN")
@@ -99,23 +100,41 @@ var analysiere = function () {
             var result = maxColor(imagematrixKlein)
             var color = result[0]
             var verhältnis = result[1]
-            
+
             $("#Result")
-                .append('<tr><th align="left"> Höchstfarbe=' + color + ' mit ' + verhältnis + '% </th>' + ' <th><input type="text" nr= "'+p+'" value="3" size="5"> </th></tr>');
+                .append('<tr><th align="left"> Höchstfarbe=' + color + ' mit ' + verhältnis + '% </th></tr>');
             p++;
             //$("#Result2").append('<li ><input type="text" id= "xPIN" value="3"></li>');
-            $('tr')
+            $('#Result tr')
                 .last()
                 .css('background-color', 'rgb(' + color + ')');
+            
+            b= imagematrixGroß.indexOf(color)
+            
+            if ( b === -1){
+                
+            $("#Legende")
+                .append('<tr><th align="left"> Höchstfarbe=' + color +'</th>' + ' <th><input type="text" nr= "'+p+'" value="3" size="5"> </th></tr>');
+            p++;
+            //$("#Result2").append('<li ><input type="text" id= "xPIN" value="3"></li>');
+            $('#Legende tr')
+                .last()
+                .css('background-color', 'rgb(' + color + ')');
+                
+            }
+            
             //$('li').last().css("width", "100");
             //$("#Result").css({color: rgb(result)})
             imagematrixGroß.push(color)
+
             var imagematrixKlein = new Array;
             
         }
         start = i;
     }
     $('#erstelle_map')
+        .show()
+    $('#result')
         .show()
     console.log(imagematrixGroß)
 };

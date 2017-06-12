@@ -19,6 +19,32 @@ var CanvasImage = function (image) {
     console.log(image.width)
     this.context.drawImage(image, 0, 0, this.width, this.height);
     console.log(this.canvas)
+    
+    
+var rows = document.getElementById("xPIN")
+        .value;
+    var columns = document.getElementById("yPIN")
+        .value;
+    
+
+
+    this.context.beginPath();
+
+    for(var x = 0; x < this.canvas.width; x++) {
+        this.context.moveTo(x * this.canvas.width/rows, 0);
+        this.context.lineTo(x * this.canvas.width/rows, this.canvas.height);
+    }
+    for(var y = 0; y < this.canvas.height; y++) {
+        this.context.moveTo(0, y * this.canvas.height/ columns);
+        this.context.lineTo(this.canvas.width, y * this.canvas.height/ columns);
+    }
+    this.context.stroke();
+
+
+
+    
+    
+    
 };
 CanvasImage.prototype.clear = function () {
     this.context.clearRect(0, 0, this.width, this.height);
