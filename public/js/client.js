@@ -35,19 +35,19 @@ var verarbeite = function () {
         b = pixels[p + 2];
         a = pixels[p + 3];
         var string = r + "," + g + "," + b;
-        
+
         if (a >= 125) {
         		if (!(r > 250 && g > 250 && b > 250)) {
                     pixelArray.push(string);
-                    
+
                 }else{
         			pixelArray.push("255,255,255");
 
 
                 }
         	}
-            
-            
+
+
     }
     //$("#analysiere").show();  
     $("#analysiere")
@@ -104,13 +104,13 @@ var analysiere = function () {
     var pp = 1;
     for (var iiii = 0; iiii < yPin; iiii++) {
         if (iiii == 0) {
-            var start = Math.round(iiii * (img.width * (img.height / xPin)))
+            var start = Math.round(iiii * (imgData.width * (imgData.height / xPin)))
         }
         for (var iii = 0; iii < xPin; iii++) {
-            var start2 = Math.round(start + (iii * (img.width / yPin)))
-            for (var ii = 0; ii < Math.round((img.height / xPin)); ii++) {
-                var start3 = Math.round((ii * (img.width)) + start2)
-                var max = Math.round(start3 + img.width / yPin);
+            var start2 = Math.round(start + (iii * (imgData.width / yPin)))
+            for (var ii = 0; ii < Math.round((imgData.height / xPin)); ii++) {
+                var start3 = Math.round((ii * (imgData.width)) + start2)
+                var max = Math.round(start3 + imgData.width / yPin);
                 for (var i = start3; i < max; i++) {
                     imagematrixKlein.push(pixelArray[i]);
                 }
