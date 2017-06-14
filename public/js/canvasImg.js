@@ -14,14 +14,8 @@ var CanvasImage = function (image) {
     document.getElementById("Images")
         .appendChild(this.canvas);
     this.width = this.canvas.width = image.width;
-    console.log(image.height)
     this.height = this.canvas.height = image.height;
-    console.log(image.width)
     this.context.drawImage(image, 0, 0, this.width, this.height);
-    console.log(this.canvas)
-    console.log("Canvas: weite = " + this.width + " Höhe = " + this.height)
-
-    
     this.setLine();    
 };
 

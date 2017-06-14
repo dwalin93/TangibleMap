@@ -30,6 +30,7 @@ function maxColor(colorArray) {
     //this.HöchsteZahl = Math.max(...this.anzahlimageMatrix)
     
 this.getTop10()
+    this.getfirs()
     
     //return [imagematrixKlein[r], verhältnis];
 };

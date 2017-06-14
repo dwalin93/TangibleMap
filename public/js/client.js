@@ -54,7 +54,7 @@ var verarbeite = function () {
         .show();
     $("#verarbeite")
         .hide();
-    console.log(pixelArray)
+    //console.log(pixelArray)
 }
 
 var erstelleMap = function () {
@@ -94,8 +94,7 @@ var analysiere = function () {
         .remove();
         
     var imagematrixKlein = new Array;
-    var imagematrixGroß = new Array;
-    var imageLegend = new Array;
+    var legende = new Array;
     var xPin = document.getElementById("xPIN")
         .value;
     var yPin = document.getElementById("yPIN")
@@ -118,11 +117,11 @@ var analysiere = function () {
             var test = "test" + pp 
             test = new maxColor(imagematrixKlein)
             var top10 = test.getTop10()
-            console.log(top10)
+            //console.log(top10)
             var first = top10[0]
             var color = first[0]
             var verhältnis = first[2]
-            console.log(test.top10)
+            //console.log(test.top10)
             
             $("#Result")
                 .append('<tr><th align="left">Abschnitt '+pp+', Farbe=' + color + ' mit ' + verhältnis + '% </th></tr>');
@@ -131,27 +130,22 @@ var analysiere = function () {
                 .last()
                 .css('background-color', 'rgb(' + color + ')');
             
-            b= imagematrixGroß.indexOf(color)
+            b= legende.indexOf(color)
             
             if ( b === -1){
                 
             $("#Legende")
                 .append('<tr><th align="left"> Farbe=' + color +'</th>' + ' <th><input type="text" nr= "'+p+'" value="3" size="5"> </th></tr>');
             p++;
-            //$("#Result2").append('<li ><input type="text" id= "xPIN" value="3"></li>');
             $('#Legende tr')
                 .last()
                 .css('background-color', 'rgb(' + color + ')');
                 
             }
-            
-            //$('li').last().css("width", "100");
-            //$("#Result").css({color: rgb(result)})
-            imagematrixGroß.push(color)
+            legende.push(color)
 
             var imagematrixKlein = new Array;
         objekte.push(test)
-            
         }
         start = i;
     }
@@ -159,8 +153,5 @@ var analysiere = function () {
         .show()
     $('#result')
         .show()
-    console.log(imagematrixGroß)
-    console.log(objekte)
-    console.log("erster wert von Objekt 4 " + objekte[3].first)
-    
+        
 };
