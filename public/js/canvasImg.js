@@ -1,3 +1,5 @@
+var maxWidth = 200;
+var maxHight = 200;
 console.log("canvasImg is running...")
 var CanvasImage = function (image) {
     if (document.getElementById('canvas') !== undefined) {
@@ -15,6 +17,22 @@ var CanvasImage = function (image) {
         .appendChild(this.canvas);
     this.width = this.canvas.width = image.width;
     this.height = this.canvas.height = image.height;
+
+    if (this.width > this.height) {
+        if (this.width > maxWidth) {
+            this.height *= maxWidth / this.width;
+            this.width = maxWidth;
+            this.canvas.width = maxWidth;
+            this.canvas.height = this.height;
+        }
+    } else {
+        if (this.height > maxHight) {
+            this.width *= maxHight / this.height;
+            this.height = maxHight;
+            this.canvas.height = maxHight;
+            this.canvas.width = this.width;
+        }
+    }
     this.context.drawImage(image, 0, 0, this.width, this.height);
     this.setLine();    
 };
