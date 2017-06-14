@@ -23,10 +23,14 @@ fileInput.addEventListener('change', function (e) {
     var imageType = /image.*/;
     if (file.type.match(imageType)) {
         var reader = new FileReader();
+        console.log($(window).height()+" & "+$(window).width() )
         reader.onload = function (e) {
             fileDisplayArea.src = reader.result;
             fileDisplayArea.id = "img";
-        }
+
+            //fileDisplayArea.width = $(window).width()/1.5;
+            
+            }
         
             $("#div_result")
                 .show();

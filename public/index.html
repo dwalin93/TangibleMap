@@ -54,7 +54,12 @@
             margin-bottom: 10px;
             background-color: lightgrey;
         }
-        
+        .ignore {
+            margin-bottom: 20px;
+            border: 1px solid black;
+            padding: 10px 0px 10px 0px;
+
+        }
         
 
     </style>
@@ -63,8 +68,11 @@
         <div class="container_All">
             yPin <input type="text" id="yPIN" value="3" size="5"> 
             xPin <input type="text" id="xPIN" value="3" size="5"> <br>
-            <input type="checkbox" id="weiß" value="TEST"> 
-            Weiß <b>nicht</b> berücksichtigen<br>
+                 <br>
+                Weiß ignorieren<input type="checkbox" id="weiß_ignore"> 
+                <br>
+                weitere/andere Farbe ignorieren <input type="text" id="color_ignore" placeholder="213,214,222" size="10"> <br>
+            <input id="angle_txt" type="text" size="5" min="0" max="170" value="90">
             <p><input type="file" id="file-input"></p>
             
         </div>
@@ -79,7 +87,7 @@
                 <table id="Legende">Legende:</table>
                 <br>
             </div>
-            <div id="Images" width="100%">
+            <div id="Images" >
                 <img id="img" src="" >
                 <canvas id="canvas"></canvas>
 
@@ -107,7 +115,7 @@
                 .hide();
 
         </script>
-
+        
     </body>
 
 </html>
