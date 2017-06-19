@@ -1,16 +1,12 @@
-var maxWidth = 200;
-var maxHight = 200;
+var maxWidth = 500;
+var maxHight = 500;
 console.log("canvasImg is running...")
-var CanvasImage = function (image) {
-    if (document.getElementById('canvas') !== undefined) {
-        $('canvas')
+var CanvasImage = function (image, DOMZielObjektName) {
+    if (document.getElementById(DOMZielObjektName) !== undefined) {
+        $('DOMZielObjektName')
             .remove();
     }
-    $("#img")
-        .hide()
-    $("#canvas")
-        .show()
-    this.canvas = document.createElement('canvas');
+    this.canvas = document.createElement(DOMZielObjektName);
     this.canvas.id = "canvas"
     this.context = this.canvas.getContext('2d');
     document.getElementById("Images")
@@ -52,7 +48,7 @@ CanvasImage.prototype.getImageData = function () {
 CanvasImage.prototype.removeCanvas = function () {
     this.canvas.parentNode.removeChild(this.canvas);
 };
-CanvasImage.prototype.setLine = function(rows,colums){
+CanvasImage.prototype.setLine = function(){
    var rows = document.getElementById("xPIN")
         .value;
     var columns = document.getElementById("yPIN")

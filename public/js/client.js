@@ -10,7 +10,6 @@ var $angle_txt = $('#angle_txt')
         });
     });
 console.log("client is running...")
-var pixelArray = new Array;
 var imgData;
 var objekte = new Array;
 
@@ -20,22 +19,36 @@ try{
     imgData = new CanvasImage(img);
 }catch(err){}
 });
-                           
+    
+var verarbeite = function () {
+var image = new Bild("img", "canvas")
+$('#verarbeite').hide()
+$('#analysiere').show()
+    
+    test(image);
+}
+
+var test = function(image) {
+    console.log(image.getPixelArray())
+    console.log(image)
+}
+/*
 var verarbeite = function () {
         
     pixelArray = new Array;
     var imagematrixKlein = new Array;
     var img = document.getElementById("img");
     imgData = new CanvasImage(img);
+    imgData.setLine()
     var pixels = imgData.getImageData()
         .data;
-    for (var p = 0, offset, r, g, b, a; p < pixels.length; p = p + 4) {
+    for (var p = 0, offset, r, g, b, a; p <= (pixels.length); p = p + 4) {
         r = pixels[p + 0];
         g = pixels[p + 1];
         b = pixels[p + 2];
         a = pixels[p + 3];
         var string = r + "," + g + "," + b;
-
+       
         if (a >= 125) {
         		if (!(r > 250 && g > 250 && b > 250)) {
                     pixelArray.push(string);
@@ -54,8 +67,13 @@ var verarbeite = function () {
         .show();
     $("#verarbeite")
         .hide();
-    //console.log(pixelArray)
+    console.log(pixels.length)
+    console.log(pixels.length/4)
+    console.log(pixelArray)
+    console.log(pixelArray.length)
+    
 }
+*/
 
 var erstelleMap = function () {
     var gewichtung = new Array;
@@ -101,17 +119,26 @@ var analysiere = function () {
         .value;
     var p = 0;
     var pp = 1;
+     console.log("imgData.width = " + imgData.width)
+     console.log("imgData.height = " + imgData.height)
     for (var iiii = 0; iiii < yPin; iiii++) {
         if (iiii == 0) {
-            var start = Math.round(iiii * (imgData.width * (imgData.height / xPin)))
+            var start =  (iiii * (imgData.width *(imgData.height / xPin)))
         }
+        console.log(start)
         for (var iii = 0; iii < xPin; iii++) {
-            var start2 = Math.round(start + (iii * (imgData.width / yPin)))
-            for (var ii = 0; ii < Math.round((imgData.height / xPin)); ii++) {
-                var start3 = Math.round((ii * (imgData.width)) + start2)
-                var max = Math.round(start3 + imgData.width / yPin);
+            var start2 = start + (iii * ((imgData.width / yPin)))
+        console.log(start2)
+            
+            for (var ii = 0; ii < Math.floor((imgData.height / xPin)); ii++) {
+                var start3 = Math.floor((ii * (imgData.width)) + start2)
+                var max = Math.floor(start3 + (imgData.width / yPin));
                 for (var i = start3; i < max; i++) {
+                    if (i>= pixelArray.length){
+                        console.log("zuLANG??!!")
+                    }else{
                     imagematrixKlein.push(pixelArray[i]);
+                    }
                 }
             }
             var test = "test" + pp 

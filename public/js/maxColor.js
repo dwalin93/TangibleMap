@@ -2,6 +2,7 @@ console.log("maxColor is running...")
 function maxColor(colorArray) {
     var a = 0;
     this.pixelArray = colorArray;
+    console.log(this.pixelArray)
     this.anzahlimageMatrix = new Array;
     this.imagematrixKlein = new Array;
     weiß_ignore = $('#weiß_ignore').is(':checked')
@@ -15,8 +16,11 @@ function maxColor(colorArray) {
         } 
         else{
         if (a === -1) {
+            if(this.pixelArray[x] == "undefined"){
+                console.log("undefined")
+            }else{
             this.imagematrixKlein.push(this.pixelArray[x]);
-            this.anzahlimageMatrix.push(1);
+            this.anzahlimageMatrix.push(1);}
         } else {
             
             this.anzahlimageMatrix[a] = this.anzahlimageMatrix[a] + 1;
@@ -30,7 +34,7 @@ function maxColor(colorArray) {
     //this.HöchsteZahl = Math.max(...this.anzahlimageMatrix)
     
 this.getTop10()
-    this.getfirs()
+    this.getfirst()
     
     //return [imagematrixKlein[r], verhältnis];
 };

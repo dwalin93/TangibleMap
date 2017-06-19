@@ -23,7 +23,8 @@ app.get('/', function (req, res) {
 server.listen(3000, "127.0.0.1");
 
 
-
+// Ohne Board ab hier auskommentieren
+/*
 board = new five.Board();
 
 board.on("ready", function() {
@@ -58,3 +59,4 @@ board.on("ready", function() {
       
 
   });
+*/
