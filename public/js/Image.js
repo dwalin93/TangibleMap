@@ -51,7 +51,6 @@ Bild.prototype.newCanvasImage = function(){
 }
 Bild.prototype.setResult = function(firstcolor){
 this.Result = firstcolor;  
-console.log(firstcolor);
 }
 
 Bild.prototype.setLegende = function(legendeArray){
@@ -65,5 +64,7 @@ this.IgnoreWeiß = Boolean;
 Bild.prototype.setIgnoreAndere = function(string){
 this.IgnoreAndere = string;  
 }
-    
+Bild.prototype.setGewichtung = function(gewichtung){
+this.Gewichtung = gewichtung;  
+}
     

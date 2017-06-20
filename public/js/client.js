@@ -18,7 +18,11 @@ $("#yPIN,#xPIN")
             imgData = new CanvasImage(img);
         } catch (err) {}
     });
-var image = new Array;
+
+const image = new Array;
+const max = 0
+const min = 155
+   
 var verarbeite = function () {
     var newimage = new Bild("img", "canvas", image.length)
     $('#verarbeite')
@@ -30,7 +34,7 @@ var verarbeite = function () {
     $("#Map2")
         .append('<option id="' + image.length + '">' + newimage.name + '</option>');
     image.push(newimage);
-    console.log(image)
+    //console.log(image)
     if (image.length < 2) {
         $('#analysiere2')
             .hide()
@@ -47,12 +51,13 @@ var erstelleMap = function () {
         var mapid2 = $("#Map2 option:selected")
             .attr("id");
     if (mapid1 !== mapid2) {
-        gewichtungMap(2)
+        gewichtungMap(2, mapid2 )
+        verteilung(mapid2)
     }
-        gewichtungMap(1)
-
+        gewichtungMap(1, mapid1 )
+        verteilung(mapid1)
 }
-var gewichtungMap = function (nr) {
+var gewichtungMap = function (nr, id) {
     var gewichtung = new Array;
     $('#Legende'+nr)
         .find("input")
@@ -61,23 +66,67 @@ var gewichtungMap = function (nr) {
                 .selector);
         });
     
-    console.log(gewichtung)
     var minimum = Math.min(...gewichtung)
     var maximum = Math.max(...gewichtung)
-    var max = 0
-    var min = 155
-    var wert = ((max - min) / (maximum)) * -1
+     var wert = ((max - min) / (maximum)) * -1
     for (var i = 0; i < gewichtung.length; i ++) {
         gewichtung[i] = wert * gewichtung[i]
     }
-    //console.log(image[mapid1])
-    console.log(gewichtung)
+
+    image[id].setGewichtung(gewichtung);
+
+
+    /*
     var ang = gewichtung[0]
     control = "mouse"
     socket.emit('changeAngle', ang, control)
     socket.on('returnAng', function (ang) {
         console.log(ang);
     });
+    */
+}
+
+var verteilung = function(mapid){
+    var winkelServo = new Array
+    var result = image[mapid].Result
+    var resultArray  = new Array
+    var legende = image[mapid].Legende
+    var gewichtung = image[mapid].Gewichtung  
+
+    for(var i = 0 ; i <result.length ;i++){
+        resultArray.push(result[i].first)
+    }
+    
+    
+    
+    for(var i = 0 ; i <resultArray.length ;i++){
+        var newresult = resultArray[i][0]
+    var a = legende.indexOf(newresult)
+    var gew = gewichtung[a]*(resultArray[i][2]/100)
+    winkelServo.push(gew)
+    console.log("Winkel vor der Streckung = " + gew)
+
+        }
+    
+    var mutiplikator = min/Math.max(...winkelServo)
+
+console.log(Math.max(...winkelServo))
+console.log(mutiplikator)
+
+    for (var i = 0; i<winkelServo.length;i++){
+        resultArray[i][3]=(winkelServo[i]*mutiplikator)
+        console.log("Winkel NACH Streckung = " + winkelServo[i]*mutiplikator)
+    }
+        
+        
+        
+    console.log(resultArray)
+
+    
+    
+    
+    
+    
 }
 
 
