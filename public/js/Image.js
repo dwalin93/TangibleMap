@@ -8,6 +8,8 @@ var Bild = function (DOMObjektName, DOMZielObjektName, canvasId) {
     imgData.setLine()
     this.name = img.name
     this.Result = new Array
+    this.Legende = new Array; 
+
     var pixels = imgData.getImageData()
         .data;
     this.data = imgData
@@ -40,13 +42,28 @@ Bild.prototype.getPixelArray = function(){
 Bild.prototype.getName = function(){
     return this.name
 }
+Bild.prototype.getResult = function(){
+    return this.Result
+}
 Bild.prototype.newCanvasImage = function(){
     new CanvasImage(this.img, this.DOMZielObjektName);
     console.log(this.img)
 }
 Bild.prototype.setResult = function(firstcolor){
-this.Result = new Array; 
 this.Result = firstcolor;  
 console.log(firstcolor);
 }
 
+Bild.prototype.setLegende = function(legendeArray){
+this.Legende = legendeArray;  
+}
+
+Bild.prototype.setIgnoreWeiß = function(Boolean){
+this.IgnoreWeiß = Boolean;  
+}
+
+Bild.prototype.setIgnoreAndere = function(string){
+this.IgnoreAndere = string;  
+}
+    
+    

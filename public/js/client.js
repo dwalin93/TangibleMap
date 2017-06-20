@@ -11,7 +11,6 @@ var $angle_txt = $('#angle_txt')
     });
 console.log("client is running...")
 var imgData;
-var objekte = new Array;
 $("#yPIN,#xPIN")
     .change(function () {
         try {
@@ -42,44 +41,45 @@ var verarbeite = function () {
             .show()
     }
 }
-
 var erstelleMap = function () {
+     var mapid1 = $("#Map1 option:selected")
+            .attr("id");
+        var mapid2 = $("#Map2 option:selected")
+            .attr("id");
+    if (mapid1 !== mapid2) {
+        gewichtungMap(2)
+    }
+        gewichtungMap(1)
+
+}
+var gewichtungMap = function (nr) {
     var gewichtung = new Array;
-    $('#Legende')
+    $('#Legende'+nr)
         .find("input")
         .each(function (index) {
             gewichtung.push($(this.value)
-                .selector)
+                .selector);
         });
+    
     console.log(gewichtung)
     var minimum = Math.min(...gewichtung)
     var maximum = Math.max(...gewichtung)
     var max = 0
     var min = 155
     var wert = ((max - min) / (maximum)) * -1
-    for (var i = 0; i < gewichtung.length; i++) {
+    for (var i = 0; i < gewichtung.length; i ++) {
         gewichtung[i] = wert * gewichtung[i]
     }
-    
-    
-    var mapid1 = $("#Map1 option:selected")
-            .attr("id");
-    
-    
-    console.log(image[mapid1])
-    
-    
+    //console.log(image[mapid1])
     console.log(gewichtung)
     var ang = gewichtung[0]
     control = "mouse"
     socket.emit('changeAngle', ang, control)
     socket.on('returnAng', function (ang) {
-    console.log(ang);
+        console.log(ang);
     });
-    
-    
-    
 }
+
 
 
 $("#Map1,#Map2")
@@ -94,65 +94,86 @@ $("#Map1,#Map2")
             .show();
         $("#canvas" + mapid2)
             .show();
-    
-    if (mapid1 !== mapid2) {
-        $('#analysiere2')
-            .show()
-    }else{
-       $('#analysiere2')
-            .hide() 
-    }
+        if (mapid1 !== mapid2) {
+            $('#analysiere2')
+                .show()
+            $('#result2')
+                .show()
+        } else {
+            $('#analysiere2')
+                .hide()
+            $('#result2')
+                .hide()
+        }
     })
 var analysiereErsteKarte = function () {
+    
     $('tr')
         .remove();
     var mapid = $("#Map1 option:selected")
         .attr("id");
+   var  weiß_ignore = $('#weiß_ignore').is(':checked')
+   var  color_ignore = $('#color_ignore').val()
+    
+    
+    if (image[mapid].Result == "" | weiß_ignore !==  image[mapid].IgnoreWeiß | color_ignore !== image[mapid].IgnoreAndere){
     pixelArray = image[mapid].getPixelArray();
     var result = analysiere(pixelArray, image[mapid])
     image[mapid].setResult(result)
+    image[mapid].setIgnoreWeiß(weiß_ignore)
+    image[mapid].setIgnoreAndere(color_ignore)
+    }
+    
+    legende(image[mapid],1)
+     $('#result1')
+        .show()
 
 }
-
-
-
 var analysiereZweiKarten = function () {
-    $('tr')
-        .remove();
+    $('tr').remove();
     var mapid1 = $("#Map1 option:selected")
         .attr("id");
     var mapid2 = $("#Map2 option:selected")
         .attr("id");
-        pixelArray = image[mapid1].getPixelArray();
-        var result = analysiere(pixelArray, image[mapid1])
-        image[mapid1].setResult(result)
-
-        pixelArray = image[mapid2].getPixelArray();
-        var result = analysiere(pixelArray, image[mapid2])
-        image[mapid2].setResult(result)
-        console.log(image)
+    
+    if (image[mapid1].Result == ""){
+    pixelArray = image[mapid1].getPixelArray();
+    var result = analysiere(pixelArray, image[mapid1])
     }
+    
+    
+    if (image[mapid2].Result == ""){
+    pixelArray = image[mapid2].getPixelArray();
+    var result = analysiere(pixelArray, image[mapid2])
+    image[mapid2].setResult(result)    
+    }
+    
+        legende(image[mapid1],1)
+        legende(image[mapid2],2)
+        
+     $('#result1')
+        .show()
+    $('#result2')
+        .show()
+}
 
 var analysiere = function (pixelArray, thisImage) {
-    var firstcolor = new Array;
+    console.log("Analyse vom Bild")
+    var objekte = new Array;
     var imagematrixKlein = new Array;
-    var legende = new Array;
     var xPin = document.getElementById("xPIN")
         .value;
     var yPin = document.getElementById("yPIN")
         .value;
     var p = 0;
     var pp = 1;
-    //console.log("imgData.width = " + imgData.width)
-    //console.log("imgData.height = " + imgData.height)
+
     for (var iiii = 0; iiii < yPin; iiii++) {
         if (iiii == 0) {
             var start = (iiii * (imgData.width * (imgData.height / xPin)))
         }
-        //console.log(start)
         for (var iii = 0; iii < xPin; iii++) {
             var start2 = start + (iii * ((imgData.width / yPin)))
-            //console.log(start2)
             for (var ii = 0; ii < Math.floor((imgData.height / xPin)); ii++) {
                 var start3 = Math.floor((ii * (imgData.width)) + start2)
                 var max = Math.floor(start3 + (imgData.width / yPin));
@@ -166,42 +187,41 @@ var analysiere = function (pixelArray, thisImage) {
             }
             var test = "test" + pp
             test = new maxColor(imagematrixKlein)
-            var top10 = test.getTop10()
-            var first = top10[0]
-            var color = first[0]
-            var verhältnis = first[2]
-            $("#Result")
-                .append('<tr><th align="left">Abschnitt ' + pp + ', Farbe=' + color + ' mit ' + verhältnis + '% </th></tr>');
-            pp++;
-            $('#Result tr')
-                .last()
-                .css('background-color', 'rgb(' + color + ')');
-            b = legende.indexOf(color)
-            if (b === -1) {
-                $("#Legende")
-                    .append('<tr><th align="left"> Farbe=' + color + '</th>' + ' <th><input type="text" nr= "' + p + '" value="3" size="5"> </th></tr>');
-                p++;
-                $('#Legende tr')
-                    .last()
-                    .css('background-color', 'rgb(' + color + ')');
-            }
-            legende.push(color)
-            firstcolor.push(first)
             var imagematrixKlein = new Array;
             objekte.push(test)
         }
         start = i;
     }
-    
-
     $('#erstelle_map')
         .show()
-    $('#result')
-        .show()
-    
-    return firstcolor
+   
+    return objekte
 };
-
-
-var legende = function () {
+var legende = function (LegendImage, nr) {
+    var legend = LegendImage.getResult()
+    var legendeArray = new Array;
+    var p = 0;
+    var pp = 1;
+    for (var i = 0; i < legend.length; i++) {
+        var first = legend[i].first
+        var color = first[0]
+        var verhältnis = first[2]
+        $("#Result"+nr)
+            .append('<tr><th align="left">Abschnitt ' + pp + ', Farbe=' + color + ' mit ' + verhältnis + '% </th></tr>');
+        pp++;
+        $('#Result'+nr+' tr')
+            .last()
+            .css('background-color', 'rgb(' + color + ')');
+        b = legendeArray.indexOf(color)
+        if (b === -1) {
+            $("#Legende"+nr)
+                .append('<tr><th align="left"> Farbe=' + color + '</th>' + ' <th><input type="text" nr= "' + p + '" value="3" name="' + color + '"size="5"> </th></tr>');
+            p++;
+            $('#Legende'+nr+' tr')
+                .last()
+                .css('background-color', 'rgb(' + color + ')');
+            legendeArray.push(color)
+        }
+    }
+    LegendImage.setLegende(legendeArray)
 }

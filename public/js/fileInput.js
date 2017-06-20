@@ -15,7 +15,9 @@ fileInput.addEventListener('change', function (e) {
         .show()
     $("#canvas")
         .hide()
-    $("#result")
+    $("#result1")
+        .hide()
+    $("#result2")
         .hide()
     $("#div_result")
         .hide();

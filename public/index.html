@@ -104,14 +104,31 @@
                         </form>
                     </div>
                 </div>
+
+                <div class="row">
+
+                    <div class="col-sm-4">
+                        <div class="div_result" id="result1">
+                            <table id="Result1">Ergebnis:</table>
+                            <table id="Legende1">Legende:</table>
+                            <br>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="div_result" id="result2">
+                            <table id="Result2">Ergebnis:</table>
+                            <table id="Legende2">Legende:</table>
+                            <br>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
 
             <br>
-            <div class="div_result" id="result">
-                <table id="Result">Ergebnis:</table>
-                <table id="Legende">Legende:</table>
-                <br>
-            </div>
+
             <div id="Images">
                 <img id="img" src="" width="500px">
                 <canvas id="canvas"></canvas>
@@ -138,7 +155,7 @@
             $("#verarbeite")
                 .hide();
             $("#analysiere1")
-                .hide();            
+                .hide();
             $("#analysiere2")
                 .hide();
             $("#erstelle_map")
