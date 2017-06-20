@@ -48,12 +48,15 @@ var erstelleMap = function () {
         .attr("id");
     var mapid2 = $("#Map2 option:selected")
         .attr("id");
+    
+    gewichtungMap(1, mapid1)
+    verteilung(mapid1)  
     if (mapid1 !== mapid2) {
         gewichtungMap(2, mapid2)
         verteilung(mapid2)
+        vergelich(mapid1,mapid2)
     }
-    gewichtungMap(1, mapid1)
-    verteilung(mapid1)
+
 }
 var gewichtungMap = function (nr, id) {
     var gewichtung = new Array;
@@ -85,6 +88,7 @@ var verteilung = function (mapid) {
     var resultArray = new Array
     var legende = image[mapid].Legende
     var gewichtung = image[mapid].Gewichtung
+    
     for (var i = 0; i < result.length; i++) {
         resultArray.push(result[i].first)
     }
@@ -94,11 +98,37 @@ var verteilung = function (mapid) {
         var gew = gewichtung[a] * (resultArray[i][2] / 100)
         winkelServo.push(gew)
     }
-    var mutiplikator = min / Math.max(...winkelServo)
+    var multiplikator = min / Math.max(...winkelServo)
     for (var i = 0; i < winkelServo.length; i++) {
-        resultArray[i][3] = (winkelServo[i] * mutiplikator)
+        resultArray[i][3] = (winkelServo[i] * multiplikator)
     }
+    
 }
+
+var vergelich = function(mapid1,mapid2){
+    var gewichtung1 = image[mapid1].Result
+    var gewichtung2 = image[mapid2].Result
+    var vergleichArray = new Array;
+    for (var i = 0; i < gewichtung1.length; i++) {
+        
+        vergleichArray.push(gewichtung1[i].first[3]-gewichtung2[i].first[3])
+    }
+    
+    console.log(vergleichArray)
+    var vergleichMax = Math.max(...vergleichArray)
+    var vergleichMin = Math.min(...vergleichArray)
+    var multiplikator = (max-min)/(vergleichMax-vergleichMin)
+    console.log(multiplikator)
+    
+    for (var i = 0; i < vergleichArray.length; i++) {
+        vergleichArray[i] = (vergleichArray[i] * multiplikator)
+    }
+    
+    console.log(vergleichArray)
+
+}
+
+
 $("#Map1,#Map2")
     .change(function () {
         var mapid1 = $("#Map1 option:selected")
