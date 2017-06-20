@@ -1,13 +1,15 @@
-var Bild = function (DOMObjektName, DOMZielObjektName) {
+var Bild = function (DOMObjektName, DOMZielObjektName, canvasId) {
         
     this.pixelArray = new Array;
     var imagematrixKlein = new Array;
-    var img = document.getElementById(DOMObjektName);
-    var DOMZielObjektName = "canvas"
-    imgData = new CanvasImage(img, DOMZielObjektName);
+    this.img = document.getElementById(DOMObjektName);
+    this.DOMZielObjektName = "canvas"
+    imgData = new CanvasImage(this.img, this.DOMZielObjektName, canvasId);
     imgData.setLine()
+    this.name = img.name
     var pixels = imgData.getImageData()
         .data;
+    this.data = imgData
     for (var p = 0, offset, r, g, b, a; p <= (pixels.length); p = p + 4) {
         r = pixels[p + 0];
         g = pixels[p + 1];
@@ -28,11 +30,17 @@ var Bild = function (DOMObjektName, DOMZielObjektName) {
 
 
     }
-    //this.getPixelArray()
 }
 
 
 Bild.prototype.getPixelArray = function(){
     return this.pixelArray
+}
+Bild.prototype.getName = function(){
+    return this.name
+}
+Bild.prototype.newCanvasImage = function(){
+    new CanvasImage(this.img, this.DOMZielObjektName);
+    console.log(this.img)
 }
 

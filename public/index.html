@@ -6,10 +6,11 @@
     </head>
     <style>
         body {
- font-family: Times, serif; 
- font-size: 110%;
- line-height: 1.5;
-}
+            font-family: Times, serif;
+            font-size: 110%;
+            line-height: 1.5;
+        }
+
         .button {
             display: inline-block;
             padding: 8px 15px;
@@ -37,16 +38,15 @@
 
         .container_All {
             padding: 50px 20px 20px;
-            background-color:#ffffff; 
-            margin-left:10%; 
-            padding-left:10px; 
-            padding-top:10px; 
-            padding-bottom:1px; 
-            border: 1px solid black;  
-            width:70%;
+            background-color: #ffffff;
+            margin-left: 10%;
+            padding-left: 10px;
+            padding-top: 10px;
+            padding-bottom: 1px;
+            border: 1px solid black;
+            width: 70%;
             box-shadow: 10px 10px 5px #888888;
             margin-top: 20px;
-
         }
 
         .div_result {
@@ -54,69 +54,102 @@
             margin-bottom: 10px;
             background-color: lightgrey;
         }
+
         .ignore {
             margin-bottom: 20px;
             border: 1px solid black;
             padding: 10px 0px 10px 0px;
-
         }
-        
 
     </style>
 
     <body>
         <div class="container_All">
-            yPin <input type="text" id="yPIN" value="3" size="5"> 
-            xPin <input type="text" id="xPIN" value="3" size="5"> <br>
-                 <br>
-                Weiß ignorieren<input type="checkbox" id="weiß_ignore"> 
-                <br>
-                weitere/andere Farbe ignorieren <input type="text" id="color_ignore" placeholder="213,214,222" size="10"> <br>
+            yPin <input type="text" id="yPIN" value="3" size="5"> xPin <input type="text" id="xPIN" value="3" size="5"> <br>
+            <br> Weiß ignorieren<input type="checkbox" id="weiß_ignore">
+            <br> weitere/andere Farbe ignorieren <input type="text" id="color_ignore" placeholder="213,214,222" size="10"> <br>
             <input id="angle_txt" type="text" size="5" min="0" max="170" value="90">
+            <br>
             <p><input type="file" id="file-input"></p>
-            
-        </div>
-            <div class="container_All" id="div_result">
 
-            <input class="button" type="submit" onclick="verarbeite()" id="verarbeite" value="verarbeite" style="background-color:lightyellow">
-            <input class="button" type="submit" onclick="analysiere()" id="analysiere" value="analysiere" style="background-color:lightgreen">
-            <input class="button" type="submit" onclick="erstelleMap()" id="erstelle_map" value="erstelle_map" style="background-color:lightblue">
-                <br><br>
+        </div>
+
+        <div class="container_All" id="div_result" style="display:none">
+            <div style="padding:20px">
+                <input class="button" type="submit" onclick="verarbeite()" id="verarbeite" value="verarbeite" style="background-color:lightyellow">
+                <input class="button" type="submit" onclick="analysiere()" id="analysiere1" value="analysiere erste Karte" style="background-color:lightgreen">
+                <input class="button" type="submit" onclick="analysiere()" id="analysiere2" value="analysiere unterschiede" style="background-color:MistyRose">
+                <input class="button" type="submit" onclick="erstelleMap()" id="erstelle_map" value="erstelle_map" style="background-color:lightblue">
+            </div>
+            <div class="container">
+
+                <div class="row">
+
+                    <div class="col-sm-4">
+
+                        <form action="#">
+                            <label>Select first Map:
+			<select id="Map1">
+			</select>
+		</label>
+                        </form>
+                    </div>
+                    <div class="col-sm-4">
+
+                        <form action="#">
+                            <label>Select second Map:
+			<select id="Map2">
+			</select>
+		</label>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <br>
             <div class="div_result" id="result">
                 <table id="Result">Ergebnis:</table>
                 <table id="Legende">Legende:</table>
                 <br>
             </div>
-            <div id="Images" >
+            <div id="Images">
                 <img id="img" src="" width="500px">
                 <canvas id="canvas"></canvas>
 
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-2.1.3.js"></script>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
         <!--    <script src="js/load-image.all.min.js"></script>    -->
         <!--    <script src="color-thief.js"></script>  -->
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/client.js" type="text/javascript"></script>
         <script src="/js/maxColor.js" type="text/javascript"></script>
         <script src="/js/canvasImg.js" type="text/javascript"></script>
+        <script src="/js/drawImage.js" type="text/javascript"></script>
         <script src="/js/fileInput.js" type="text/javascript"></script>
         <script src="/js/Image.js" type="text/javascript"></script>
+        <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+
         <script>
             $("#verarbeite")
                 .hide();
-            $("#analysiere")
+            $("#analysiere1")
+                .hide();            
+            $("#analysiere2")
                 .hide();
             $("#erstelle_map")
                 .hide();
             $("#result")
                 .hide();
-
             $("#div_result")
                 .hide();
 
         </script>
-        
+
     </body>
 
 </html>

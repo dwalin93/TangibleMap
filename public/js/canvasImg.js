@@ -1,14 +1,17 @@
 var maxWidth = 500;
 var maxHight = 500;
 console.log("canvasImg is running...")
-var CanvasImage = function (image, DOMZielObjektName) {
-    if (document.getElementById(DOMZielObjektName) !== undefined) {
-        $('DOMZielObjektName')
-            .remove();
-    }
+var CanvasImage = function (image, DOMZielObjektName, canvasId) {
+    /*if (document.getElementById(DOMZielObjektName) !== undefined) {
+        $(DOMZielObjektName).remove();
+    }*/
+
     this.canvas = document.createElement(DOMZielObjektName);
-    this.canvas.id = "canvas"
+    this.canvas.id = "canvas"+canvasId
     this.context = this.canvas.getContext('2d');
+
+    //$( "Images" ).appendChild( "<h2>"+image.name+"</h2>"  );
+
     document.getElementById("Images")
         .appendChild(this.canvas);
     this.width = this.canvas.width = image.width;
@@ -29,9 +32,19 @@ var CanvasImage = function (image, DOMZielObjektName) {
             this.canvas.width = this.width;
         }
     }
+    console.log(image)
     this.context.drawImage(image, 0, 0, this.width, this.height);
-    this.setLine();    
+    this.setLine();
+    console.log("hier")
+    $('#img').hide();
+    $('canvas').hide();
+    $("#canvas"+canvasId).show();
+    
+    
 };
+
+
+
 
 CanvasImage.prototype.clear = function () {
     this.context.clearRect(0, 0, this.width, this.height);

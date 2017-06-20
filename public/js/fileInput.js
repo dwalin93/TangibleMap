@@ -7,7 +7,9 @@ fileInput.addEventListener('change', function (e) {
         .show()
     $('#erstelle_map')
         .hide()
-    $('#analysiere')
+    $('#analysiere1')
+        .hide()    
+    $('#analysiere2')
         .hide()
     $("#img")
         .show()
@@ -16,7 +18,7 @@ fileInput.addEventListener('change', function (e) {
     $("#result")
         .hide()
     $("#div_result")
-                .hide();
+        .hide();
     
     
     var file = fileInput.files[0];
@@ -26,9 +28,6 @@ fileInput.addEventListener('change', function (e) {
         reader.onload = function (e) {
             fileDisplayArea.src = reader.result;
             fileDisplayArea.id = "img";
-
-            //fileDisplayArea.width = $(window).width()/1.5;
-            
             }
         
             $("#div_result")
@@ -37,6 +36,8 @@ fileInput.addEventListener('change', function (e) {
     } else {
         fileDisplayArea.innerHTML = "File not supported!"
     }
+        
+        fileDisplayArea.name = this.value.replace(/.*[\/\\]/, '');
 }catch(err){
     console.log("Es wurde keine Datei ausgewählt")
       }});

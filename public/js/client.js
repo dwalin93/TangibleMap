@@ -19,61 +19,25 @@ try{
     imgData = new CanvasImage(img);
 }catch(err){}
 });
-    
+
+
+
+
+
+var image = new Array;
 var verarbeite = function () {
-var image = new Bild("img", "canvas")
+var newimage = new Bild("img", "canvas",image.length)
 $('#verarbeite').hide()
-$('#analysiere').show()
-    
-    test(image);
+$('#analysiere1').show()
+$('#analysiere2').show()
+$("#Map1").append('<option id="'+image.length+'">'+newimage.name+'</option>');
+$("#Map2").append('<option id="'+image.length+'">'+newimage.name+'</option>');
+image.push(newimage);
+
 }
 
-var test = function(image) {
-    console.log(image.getPixelArray())
-    console.log(image)
-}
-/*
-var verarbeite = function () {
-        
-    pixelArray = new Array;
-    var imagematrixKlein = new Array;
-    var img = document.getElementById("img");
-    imgData = new CanvasImage(img);
-    imgData.setLine()
-    var pixels = imgData.getImageData()
-        .data;
-    for (var p = 0, offset, r, g, b, a; p <= (pixels.length); p = p + 4) {
-        r = pixels[p + 0];
-        g = pixels[p + 1];
-        b = pixels[p + 2];
-        a = pixels[p + 3];
-        var string = r + "," + g + "," + b;
-       
-        if (a >= 125) {
-        		if (!(r > 250 && g > 250 && b > 250)) {
-                    pixelArray.push(string);
-
-                }else{
-        			pixelArray.push("255,255,255");
 
 
-                }
-        	}
-
-
-    }
-    //$("#analysiere").show();  
-    $("#analysiere")
-        .show();
-    $("#verarbeite")
-        .hide();
-    console.log(pixels.length)
-    console.log(pixels.length/4)
-    console.log(pixelArray)
-    console.log(pixelArray.length)
-    
-}
-*/
 
 var erstelleMap = function () {
     var gewichtung = new Array;
@@ -106,11 +70,29 @@ var erstelleMap = function () {
 }
 
 
+$( "#Map1,#Map2" ).change(function() {
+    var mapid1 = $("#Map1 option:selected").attr("id");
+    var mapid2 = $("#Map2 option:selected").attr("id");
+    $("canvas").hide();
+    $("#canvas"+mapid1).show();
+    $("#canvas"+mapid2).show();
+
+    
+})
+
+
+
+
 var analysiere = function () {
     
     $('tr')
         .remove();
-        
+    
+//alert($("Maps :selected").value)
+var mapid = $("#Map1 option:selected").attr("id");
+pixelArray = image[mapid].getPixelArray();
+    
+    //DrawCanvasImage(pixelArray,"canvas2");
     var imagematrixKlein = new Array;
     var legende = new Array;
     var xPin = document.getElementById("xPIN")
@@ -119,16 +101,16 @@ var analysiere = function () {
         .value;
     var p = 0;
     var pp = 1;
-     console.log("imgData.width = " + imgData.width)
-     console.log("imgData.height = " + imgData.height)
+     //console.log("imgData.width = " + imgData.width)
+     //console.log("imgData.height = " + imgData.height)
     for (var iiii = 0; iiii < yPin; iiii++) {
         if (iiii == 0) {
             var start =  (iiii * (imgData.width *(imgData.height / xPin)))
         }
-        console.log(start)
+        //console.log(start)
         for (var iii = 0; iii < xPin; iii++) {
             var start2 = start + (iii * ((imgData.width / yPin)))
-        console.log(start2)
+        //console.log(start2)
             
             for (var ii = 0; ii < Math.floor((imgData.height / xPin)); ii++) {
                 var start3 = Math.floor((ii * (imgData.width)) + start2)
@@ -144,11 +126,9 @@ var analysiere = function () {
             var test = "test" + pp 
             test = new maxColor(imagematrixKlein)
             var top10 = test.getTop10()
-            //console.log(top10)
             var first = top10[0]
             var color = first[0]
             var verhältnis = first[2]
-            //console.log(test.top10)
             
             $("#Result")
                 .append('<tr><th align="left">Abschnitt '+pp+', Farbe=' + color + ' mit ' + verhältnis + '% </th></tr>');
@@ -180,5 +160,6 @@ var analysiere = function () {
         .show()
     $('#result')
         .show()
+
         
 };
