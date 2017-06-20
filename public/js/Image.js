@@ -7,6 +7,7 @@ var Bild = function (DOMObjektName, DOMZielObjektName, canvasId) {
     imgData = new CanvasImage(this.img, this.DOMZielObjektName, canvasId);
     imgData.setLine()
     this.name = img.name
+    this.Result = new Array
     var pixels = imgData.getImageData()
         .data;
     this.data = imgData
@@ -42,5 +43,10 @@ Bild.prototype.getName = function(){
 Bild.prototype.newCanvasImage = function(){
     new CanvasImage(this.img, this.DOMZielObjektName);
     console.log(this.img)
+}
+Bild.prototype.setResult = function(firstcolor){
+this.Result = new Array; 
+this.Result = firstcolor;  
+console.log(firstcolor);
 }
 

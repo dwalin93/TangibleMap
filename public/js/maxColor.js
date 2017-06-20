@@ -2,7 +2,6 @@ console.log("maxColor is running...")
 function maxColor(colorArray) {
     var a = 0;
     this.pixelArray = colorArray;
-    //console.log(this.pixelArray)
     this.anzahlimageMatrix = new Array;
     this.imagematrixKlein = new Array;
     weiß_ignore = $('#weiß_ignore').is(':checked')

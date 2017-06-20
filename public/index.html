@@ -77,8 +77,8 @@
         <div class="container_All" id="div_result" style="display:none">
             <div style="padding:20px">
                 <input class="button" type="submit" onclick="verarbeite()" id="verarbeite" value="verarbeite" style="background-color:lightyellow">
-                <input class="button" type="submit" onclick="analysiere()" id="analysiere1" value="analysiere erste Karte" style="background-color:lightgreen">
-                <input class="button" type="submit" onclick="analysiere()" id="analysiere2" value="analysiere unterschiede" style="background-color:MistyRose">
+                <input class="button" type="submit" onclick="analysiereErsteKarte()" id="analysiere1" value="analysiere erste Karte" style="background-color:lightgreen">
+                <input class="button" type="submit" onclick="analysiereZweiKarten()" id="analysiere2" value="analysiere unterschiede" style="background-color:MistyRose">
                 <input class="button" type="submit" onclick="erstelleMap()" id="erstelle_map" value="erstelle_map" style="background-color:lightblue">
             </div>
             <div class="container">
@@ -94,7 +94,7 @@
 		</label>
                         </form>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" id="classMap2" style="display:none">
 
                         <form action="#">
                             <label>Select second Map:
