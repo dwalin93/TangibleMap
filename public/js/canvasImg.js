@@ -1,5 +1,5 @@
-var maxWidth = 500;
-var maxHight = 500;
+var maxWidth = 300;
+var maxHight = 300;
 console.log("canvasImg is running...")
 var CanvasImage = function (image, DOMZielObjektName, canvasId) {
     /*if (document.getElementById(DOMZielObjektName) !== undefined) {

@@ -1,14 +1,5 @@
-var socket = io.connect("http://" + document.location.hostname + ":3000")
-    , notif, control;
-var $angle_txt = $('#angle_txt')
-    .on('change', function () {
-        var ang = $angle_txt.val()
-        control = "mouse"
-        socket.emit('changeAngle', ang, control)
-        socket.on('returnAng', function (ang) {
-            console.log(ang);
-        });
-    });
+var werte = servo.getWerteServo();
+var servo = require('./public/js/servo.js');
 console.log("client is running...")
 var imgData;
 $("#yPIN,#xPIN")
@@ -73,6 +64,7 @@ var gewichtungMap = function (nr, id) {
         gewichtung[i] = wert * gewichtung[i]
     }
     image[id].setGewichtung(gewichtung);
+
     /*
     var ang = gewichtung[0]
     control = "mouse"
@@ -108,7 +100,7 @@ var verteilung = function (mapid) {
 var vergelich = function(mapid1,mapid2){
     var gewichtung1 = image[mapid1].Result
     var gewichtung2 = image[mapid2].Result
-    var vergleichArray = new Array;
+    vergleichArray = new Array;
     for (var i = 0; i < gewichtung1.length; i++) {
         
         vergleichArray.push(gewichtung1[i].first[3]-gewichtung2[i].first[3])
@@ -121,10 +113,13 @@ var vergelich = function(mapid1,mapid2){
     console.log(multiplikator)
     
     for (var i = 0; i < vergleichArray.length; i++) {
-        vergleichArray[i] = (vergleichArray[i] * multiplikator)
+        vergleichArray[i] = (Math.abs(vergleichArray[i] * multiplikator))
     }
-    
-    console.log(vergleichArray)
+
+    servo.setWerteServo(vergleichArray);
+    console.log(vergleichArray);
+    return vergleichArray;
+
 
 }
 
@@ -220,6 +215,7 @@ var analysiere = function (pixelArray, thisImage) {
                         console.log("zuLANG??!!")
                     } else {
                         imagematrixKlein.push(pixelArray[i]);
+
                     }
                 }
             }
@@ -227,6 +223,7 @@ var analysiere = function (pixelArray, thisImage) {
             test = new maxColor(imagematrixKlein)
             var imagematrixKlein = new Array;
             objekte.push(test)
+
         }
         start = i;
     }
@@ -262,3 +259,7 @@ var legende = function (LegendImage, nr) {
     }
     LegendImage.setLegende(legendeArray)
 }
+
+
+
+
