@@ -1,5 +1,6 @@
-var werte = servo.getWerteServo();
+/*var werte = servo.getWerteServo();
 var servo = require('./public/js/servo.js');
+*/
 console.log("client is running...")
 var imgData;
 $("#yPIN,#xPIN")
@@ -18,16 +19,11 @@ var verarbeite = function () {
         .hide()
     $('#analysiere1')
         .show()
-    $("#Map1")
-        .append('<option id="' + image.length + '">' + newimage.name + '</option>');
-    $("#Map2")
+    $("#Map1, #Map2")
         .append('<option id="' + image.length + '">' + newimage.name + '</option>');
     image.push(newimage);
-    //console.log(image)
     if (image.length < 2) {
-        $('#analysiere2')
-            .hide()
-        $('#classMap2')
+        $('#analysiere2, #classMap2')
             .hide()
     } else {
         $('#classMap2')
@@ -39,15 +35,14 @@ var erstelleMap = function () {
         .attr("id");
     var mapid2 = $("#Map2 option:selected")
         .attr("id");
-    
     gewichtungMap(1, mapid1)
-    verteilung(mapid1)  
+    verteilung(mapid1)
     if (mapid1 !== mapid2) {
         gewichtungMap(2, mapid2)
         verteilung(mapid2)
-        vergelich(mapid1,mapid2)
+        resultString = vergelich(mapid1, mapid2)
     }
-
+    console.log(image[mapid1])
 }
 var gewichtungMap = function (nr, id) {
     var gewichtung = new Array;
@@ -64,15 +59,6 @@ var gewichtungMap = function (nr, id) {
         gewichtung[i] = wert * gewichtung[i]
     }
     image[id].setGewichtung(gewichtung);
-
-    /*
-    var ang = gewichtung[0]
-    control = "mouse"
-    socket.emit('changeAngle', ang, control)
-    socket.on('returnAng', function (ang) {
-        console.log(ang);
-    });
-    */
 }
 var verteilung = function (mapid) {
     var winkelServo = new Array
@@ -80,7 +66,6 @@ var verteilung = function (mapid) {
     var resultArray = new Array
     var legende = image[mapid].Legende
     var gewichtung = image[mapid].Gewichtung
-    
     for (var i = 0; i < result.length; i++) {
         resultArray.push(result[i].first)
     }
@@ -94,57 +79,41 @@ var verteilung = function (mapid) {
     for (var i = 0; i < winkelServo.length; i++) {
         resultArray[i][3] = (winkelServo[i] * multiplikator)
     }
-    
 }
-
-var vergelich = function(mapid1,mapid2){
+var vergelich = function (mapid1, mapid2) {
     var gewichtung1 = image[mapid1].Result
     var gewichtung2 = image[mapid2].Result
     vergleichArray = new Array;
     for (var i = 0; i < gewichtung1.length; i++) {
-        
-        vergleichArray.push(gewichtung1[i].first[3]-gewichtung2[i].first[3])
+        vergleichArray.push(gewichtung1[i].first[3] - gewichtung2[i].first[3])
     }
-    
     console.log(vergleichArray)
     var vergleichMax = Math.max(...vergleichArray)
     var vergleichMin = Math.min(...vergleichArray)
-    var multiplikator = (max-min)/(vergleichMax-vergleichMin)
+    var multiplikator = (max - min) / (vergleichMax - vergleichMin)
     console.log(multiplikator)
-    
     for (var i = 0; i < vergleichArray.length; i++) {
         vergleichArray[i] = (Math.abs(vergleichArray[i] * multiplikator))
     }
-
-    servo.setWerteServo(vergleichArray);
     console.log(vergleichArray);
+    servo.setWerteServo(vergleichArray);
     return vergleichArray;
-
-
 }
-
-
 $("#Map1,#Map2")
     .change(function () {
         var mapid1 = $("#Map1 option:selected")
             .attr("id");
         var mapid2 = $("#Map2 option:selected")
             .attr("id");
-        $("canvas")
+        $("canvas, h2")
             .hide();
-        $("#canvas" + mapid1)
-            .show();
-        $("#canvas" + mapid2)
+        $("#canvas" + mapid1 + ", #canvas" + mapid2 + ",#imgName" + mapid1 + ",#imgName" + mapid2)
             .show();
         if (mapid1 !== mapid2) {
-            $('#analysiere2')
-                .show()
-            $('#result2')
+            $('#analysiere2, #result2')
                 .show()
         } else {
-            $('#analysiere2')
-                .hide()
-            $('#result2')
+            $('#analysiere2, #result2')
                 .hide()
         }
     })
@@ -186,12 +155,11 @@ var analysiereZweiKarten = function () {
     }
     legende(image[mapid1], 1)
     legende(image[mapid2], 2)
-    $('#result1')
-        .show()
-    $('#result2')
+    $('#result1, #result2')
         .show()
 }
 var analysiere = function (pixelArray, thisImage) {
+    console.log(imgData)
     console.log("Analyse vom Bild")
     var objekte = new Array;
     var imagematrixKlein = new Array;
@@ -215,7 +183,6 @@ var analysiere = function (pixelArray, thisImage) {
                         console.log("zuLANG??!!")
                     } else {
                         imagematrixKlein.push(pixelArray[i]);
-
                     }
                 }
             }
@@ -223,7 +190,6 @@ var analysiere = function (pixelArray, thisImage) {
             test = new maxColor(imagematrixKlein)
             var imagematrixKlein = new Array;
             objekte.push(test)
-
         }
         start = i;
     }
@@ -259,7 +225,3 @@ var legende = function (LegendImage, nr) {
     }
     LegendImage.setLegende(legendeArray)
 }
-
-
-
-

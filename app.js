@@ -1,33 +1,26 @@
 var servo = require('./public/js/servo.js');
-var express = require('express'),
-    app = express(),
-    server = require('http').Server(app),
-    io = require('socket.io')(server),
-    five = require("johnny-five"),
-	oldAng = 90;
-
-
+var express = require('express')
+    , app = express()
+    , server = require('http')
+    .Server(app)
+    , io = require('socket.io')(server)
+    , five = require("johnny-five")
+    , oldAng = 90;
 app.disable('x-powered-by');
-
 app.use(function (req, res, next) {
-        res.setHeader('Access-Control-Allow-Origin', "http://"+req.headers.host+':8000');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-        res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-        next();
-    }
-);
+    res.setHeader('Access-Control-Allow-Origin', "http://" + req.headers.host + ':8000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    next();
+});
 app.use("/", express.static(__dirname + "/public"));
-
 app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/public/index.html');
+    res.sendfile(__dirname + '/public/index.html');
 });
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
-
 server.listen(3000, "127.0.0.1");
-
-
 // Ohne Board auskommentieren
-
+/*
 var board = new five.Board();
 
 board.on("ready", function() {
@@ -133,3 +126,4 @@ board.on("ready", function() {
 
   });
 
+*/
