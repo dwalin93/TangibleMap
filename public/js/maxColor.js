@@ -1,5 +1,10 @@
 console.log("maxColor is running...")
 
+
+/*
+*   Die Funktion maxColor nimmt ein colorArray entgegen
+*   Diese Funktion analsiert das colorArray nach Anzahl der vorhandenen Farben
+*/
 function maxColor(colorArray) {
     var a = 0;
     this.pixelArray = colorArray;
@@ -33,6 +38,12 @@ function maxColor(colorArray) {
     this.getTop10()
     this.getfirst()
 };
+
+
+/*
+*   getTop10 gibt die ersten 10 Farben mit anzahl und verhältnis zurück
+*
+*/
 maxColor.prototype.getTop10 = function () {
     var internAnzahlimageMatrix = this.anzahlimageMatrix.slice();
     this.top10 = new Array;
@@ -47,6 +58,11 @@ maxColor.prototype.getTop10 = function () {
     }
     return this.top10
 };
+
+/*
+*   getfirst gibt die erste Farbe mit anzahl und verhältns zurück
+*
+*/
 maxColor.prototype.getfirst = function () {
     this.first = this.top10[0]
     return this.first
