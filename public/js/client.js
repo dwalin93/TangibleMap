@@ -12,7 +12,20 @@ $("#yPIN,#xPIN")
 const image = new Array;
 const max = 0
 const min = 155
+
+/*  
+*   Die Funktion Verarbeite deligiert den ersten Schritt für die Analyse des Eingeladenen Bildes
+*   Jedes hier verarbeitete Bild (Objekt) wird in das Array "Image" eingefügt
+*/
+
 var verarbeite = function () {
+    /* Es wird ein newimage definiert, dies erstellt ein Bild Objekt, hierfür wird 
+    "img"(dies ist die ID für das hochgeladene Bild)
+    "canvas"(dies ist die ID für das Objekt in der Index, hinter das neue canvas eingefügt wird) und 
+    "image.length" (dies dient zur erzeugung der neuen ID für das canvas Objekt, diese setzt sich aus Canvas und image.length zusammen )
+    übergeben
+    */
+    
     var newimage = new Bild("img", "canvas", image.length)
     $('#verarbeite')
         .hide()
@@ -34,6 +47,12 @@ var verarbeite = function () {
             .show()
     }
 }
+
+/*
+*   Die Funktion erstelleMap definiert für jede in der Index ausgewählte Map eine Variable
+*   wenn zwei unterschiedliche Maps selektiert sind, wird die if Anweisung ausgeführt, ansosnsten nicht
+*/
+
 var erstelleMap = function () {
     var mapid1 = $("#Map1 option:selected")
         .attr("id");
@@ -49,6 +68,14 @@ var erstelleMap = function () {
     }
 
 }
+
+/*
+*   Die Funktion gewichtungMap fordert eine "nr" und eine "id"
+*   Die nr identifieziert die zugehörige Legende der Map
+*   Die id wählt die map aus dem Immage-Array aus
+*   Diese Funktion gibt jedem quadrat des Obejkts in der Image-Array eine gewichtung (Winkel) für die Servos 
+*   Die Grenzen der Servos werden in var max & var min definiert 
+*/
 var gewichtungMap = function (nr, id) {
     var gewichtung = new Array;
     $('#Legende' + nr)
@@ -74,6 +101,13 @@ var gewichtungMap = function (nr, id) {
     });
     */
 }
+
+/*
+*   Die Funktion vertileung passt die gewichtung der quadranten an das prozenuale Ergebnis der jeweiligen Analyse an
+*   Ein Quadrant mit weniger weiß als ein anderer bekommt auch einen niedrigeren Winkel
+*
+*/
+
 var verteilung = function (mapid) {
     var winkelServo = new Array
     var result = image[mapid].Result
@@ -96,6 +130,13 @@ var verteilung = function (mapid) {
     }
     
 }
+
+
+/*
+*   Die Funktion vergleich nimmt die zwei selectierten Maps und vegelicht die resultate
+*   Das Ergebniss dieses Vergelichs wird im anschluss auf die darzustellenden WInkel getreckt.
+*
+*/
 
 var vergelich = function(mapid1,mapid2){
     var gewichtung1 = image[mapid1].Result
@@ -124,8 +165,16 @@ var vergelich = function(mapid1,mapid2){
 }
 
 
+/*
+*   jQuery Listener für die DropDown in der Index
+*/
+
 $("#Map1,#Map2")
     .change(function () {
+    
+    $('tr')
+        .remove();
+    
         var mapid1 = $("#Map1 option:selected")
             .attr("id");
         var mapid2 = $("#Map2 option:selected")
@@ -142,11 +191,15 @@ $("#Map1,#Map2")
             .show();
         $("#canvas" + mapid2)
             .show();
+        legende(image[mapid1], 1)
+
         if (mapid1 !== mapid2) {
             $('#analysiere2')
                 .show()
             $('#result2')
                 .show()
+                legende(image[mapid2], 2)
+
         } else {
             $('#analysiere2')
                 .hide()
@@ -154,6 +207,15 @@ $("#Map1,#Map2")
                 .hide()
         }
     })
+
+
+/*
+*   Die Funktion analysiereErsteKarte nimmt EINE selektierte Map und analysiert sie.
+*   Wenn noch kein Result verhanden ist, wird die Funktion "analysieren" aufgerufen, 
+*   auch wenn "weiß ignorieren" und "Andere Farbe Ignorieren" verändert wurde.
+*/
+
+
 var analysiereErsteKarte = function () {
     $('tr')
         .remove();
@@ -174,6 +236,13 @@ var analysiereErsteKarte = function () {
     $('#result1')
         .show()
 }
+
+/*
+*   Die Funktion analysiereZweiKarten nimmt ZWEI selektierte Maps und analysiert sie.
+*   Wenn noch kein Result verhanden ist, wird die Funktion "analysieren" aufgerufen, 
+*   auch wenn "weiß ignorieren" und "Andere Farbe Ignorieren" verändert wurde.
+*/
+
 var analysiereZweiKarten = function () {
     $('tr')
         .remove();
@@ -197,6 +266,16 @@ var analysiereZweiKarten = function () {
     $('#result2')
         .show()
 }
+
+
+/*
+*   Die Funktion analysieren nimmt ein PixelArray und die zu analysierende Map
+*   Diese Funktion analysiert das gesammte Pixel Array der Map, teilt dieses in die anzahl ausgewählter x & y Quadranten.
+*   Danach wird der Quadrant an die Funktion maxColor übergeben.
+*   Am ende wird ein Array objekte zureückgegeben
+*/
+
+
 var analysiere = function (pixelArray, thisImage) {
     console.log("Analyse vom Bild")
     var objekte = new Array;
@@ -237,6 +316,15 @@ var analysiere = function (pixelArray, thisImage) {
         .show()
     return objekte
 };
+
+
+/*
+*   Die Funktion Legende erstellt das Resultat und die Legende für jede Map 
+*   Die Funktion nimmt das Bild-Objekt und die nummer der Legende in der Index
+*
+*/
+
+
 var legende = function (LegendImage, nr) {
     var legend = LegendImage.getResult()
     var legendeArray = new Array;
@@ -265,7 +353,3 @@ var legende = function (LegendImage, nr) {
     }
     LegendImage.setLegende(legendeArray)
 }
-
-
-
-
