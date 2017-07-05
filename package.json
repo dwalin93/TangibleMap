@@ -1,13 +1,28 @@
 {
-  "name": "Servo-moteur",
-  "author": "Manuel CQE",
+  "name": "tangiblemap",
+  "author": "Philipp Pfeiffer",
   "version": "0.0.1",
   "description": "Servo moteur + NodeJS + Socke.io + Jhonny-five + Arduino",
   "dependencies": {
     "express": "~4.0",
     "johnny-five": "latest",
+    "node-gyp": "^3.6.2",
     "require.js": "^1.0.0",
     "serialport": "1.4.10",
     "socket.io": ">= 1.0.2"
-  }
+  },
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ppfei03/TangibleMap.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ppfei03/TangibleMap/issues"
+  },
+  "homepage": "https://github.com/ppfei03/TangibleMap#readme"
 }
