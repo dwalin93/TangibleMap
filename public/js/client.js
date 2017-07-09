@@ -66,7 +66,7 @@ var erstelleMap = function () {
         verteilung(mapid2)
         vergelich(mapid1,mapid2)
     }
-
+    console.log(image[mapid1].Result)
 }
 
 /*
