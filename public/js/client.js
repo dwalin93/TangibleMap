@@ -66,7 +66,13 @@ var erstelleMap = function () {
         verteilung(mapid2)
         vergelich(mapid1,mapid2)
     }
-    console.log(image[mapid1].Result)
+    var winkelArray = []
+    //console.log(image[mapid1].Result)
+    for (var i = 0; i < image[mapid1].Result.length;i++){
+        winkelArray.push(image[mapid1].Result[i].first[3])
+    }
+        console.log(winkelArray)
+
 }
 
 /*
@@ -151,7 +157,7 @@ var vergelich = function(mapid1,mapid2){
     var vergleichMax = Math.max(...vergleichArray)
     var vergleichMin = Math.min(...vergleichArray)
     var multiplikator = (max-min)/(vergleichMax-vergleichMin)
-    console.log(multiplikator)
+    //console.log(multiplikator)
     
     for (var i = 0; i < vergleichArray.length; i++) {
         vergleichArray[i] = (Math.abs(vergleichArray[i] * multiplikator))
