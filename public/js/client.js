@@ -353,8 +353,12 @@ var legende = function (LegendImage, nr) {
             p++;
             $('#Legende' + nr + ' tr')
                 .last()
-                .css('background-color', 'rgb(' + color + ')');
+                .css('background-color', 'rgb(' + color + ')')
+                .tooltip({'trigger':'focus', 'title': 'Set the weight, from 0 (unobserved) to any other number. High number is high weight , low number is low weight.'});
             legendeArray.push(color)
+            
+            
+            
         }
     }
     LegendImage.setLegende(legendeArray)
