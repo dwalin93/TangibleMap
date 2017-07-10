@@ -96,6 +96,7 @@ var gewichtungMap = function (nr, id) {
     var maximum = Math.max(...gewichtung)
     var wert = ((max - min) / (maximum)) * -1
     for (var i = 0; i < gewichtung.length; i++) {
+        
         gewichtung[i] = wert * gewichtung[i]
     }
     image[id].setGewichtung(gewichtung);
@@ -129,6 +130,12 @@ var verteilung = function (mapid) {
     for (var i = 0; i < resultArray.length; i++) {
         var newresult = resultArray[i][0]
         var a = legende.indexOf(newresult)
+            console.log(resultArray[i][2])
+
+        if(isNaN(parseFloat(resultArray[i][0]))){
+            resultArray[i][2]=0
+        }
+
         var gew = gewichtung[a] * (resultArray[i][2] / 100)
         winkelServo.push(gew)
     }
@@ -371,13 +378,12 @@ var legende = function (LegendImage, nr) {
 
 var tableResult = function(){
     
-    
     getservoWinkelTable()
     
     windowObjectReference = window.open(
     "./table",
-    "Table",
-    "resizable,scrollbars,status"
+    "test",
+    "status"
     );
     
     
@@ -392,12 +398,15 @@ var getservoWinkelTable = function(){
     
     var werte = [];
     var result = image[mapid].Result
-
+    console.log(image[mapid].Result)
     for(var i=0; i< result.length;i++){
      
     werte.push(result[i].first[0])
     }
-    sessionStorage.setItem('test', werte);
-    console.log(sessionStorage.getItem('test'));
-    
+    localStorage.setItem('test', werte);    
 }
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+

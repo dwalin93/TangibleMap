@@ -52,31 +52,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 
-<script src="./js/client.js" type="text/javascript"></script>
+<script src="./js/tabel.js" type="text/javascript"></script>
 
-<script>
 
-    window.onload = function () {
-    console.log("HIER")
-    var str = sessionStorage.getItem('test');
-
-    
-    console.log(str)
-    var chunks = [];
-    str = str.split(",")
-    console.log(str)
-    for (var i = 0, charsLength = str.length; i < charsLength; i += 3) {
-        chunks.push([str[i], str[i + 1], str[i + 2]]);
-    }
-    console.log(chunks);
-    for (var i = 0; i < chunks.length; i++) {
-        var color = chunks[i]
-        var p = i + 1
-        $('#resultTable' + p)
-            .css('background-color', 'rgb(' + color + ')')
-    }
-    
-}
-</script>
 
 </html>

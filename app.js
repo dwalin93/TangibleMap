@@ -7,7 +7,6 @@ var express = require('express')
     , five = require("johnny-five")
     , oldAng = 90;
 
-var bodyParser= require('body-parser')
 app.disable('x-powered-by');
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', "http://" + req.headers.host + ':8000');
@@ -16,7 +15,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use(bodyParser.urlencoded({extended:true}))
 
 app.use("/", express.static(__dirname + "/public"));
 

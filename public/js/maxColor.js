@@ -14,10 +14,11 @@ function maxColor(colorArray) {
         .is(':checked')
     color_ignore = $('#color_ignore')
         .val()
+    color_ignore=color_ignore.split(" ")
     for (var x = 0; x < this.pixelArray.length; x++) {
         a = this.imagematrixKlein.indexOf(this.pixelArray[x]);
         if (weiß_ignore && (this.pixelArray[x] == "255,255,255")) { // do nothing
-        } else if (color_ignore !== "" && (this.pixelArray[x] == color_ignore)) { // do nothing
+        } else if (color_ignore !== "" && (color_ignore.indexOf(this.pixelArray[x]) !== -1)) { // do nothing
         } else {
             if (a === -1) {
                 if (this.pixelArray[x] == "undefined") {
