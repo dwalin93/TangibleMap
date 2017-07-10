@@ -6,6 +6,8 @@ var express = require('express')
     , io = require('socket.io')(server)
     , five = require("johnny-five")
     , oldAng = 90;
+
+var bodyParser= require('body-parser')
 app.disable('x-powered-by');
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', "http://" + req.headers.host + ':8000');
@@ -13,12 +15,23 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     next();
 });
+
+app.use(bodyParser.urlencoded({extended:true}))
+
 app.use("/", express.static(__dirname + "/public"));
+
 app.get('/', function (req, res) {
     res.sendfile(__dirname + '/public/index.html');
 });
+
+app.get('/table', function (req, res) {
+    res.sendfile(__dirname + '/public/tabel.html');
+});
+
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
 server.listen(3000, "127.0.0.1");
+
+
 // Ohne Board auskommentieren
 /*
 var board = new five.Board();

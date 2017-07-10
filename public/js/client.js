@@ -65,9 +65,11 @@ var erstelleMap = function () {
         gewichtungMap(2, mapid2)
         verteilung(mapid2)
         vergelich(mapid1,mapid2)
+    }else{
+        tableResult()
     }
     var winkelArray = []
-    //console.log(image[mapid1].Result)
+
     for (var i = 0; i < image[mapid1].Result.length;i++){
         winkelArray.push(image[mapid1].Result[i].first[3])
     }
@@ -362,4 +364,40 @@ var legende = function (LegendImage, nr) {
         }
     }
     LegendImage.setLegende(legendeArray)
+}
+
+
+
+
+var tableResult = function(){
+    
+    
+    getservoWinkelTable()
+    
+    windowObjectReference = window.open(
+    "./table",
+    "Table",
+    "resizable,scrollbars,status"
+    );
+    
+    
+    
+}
+
+var getservoWinkelTable = function(){
+
+    
+    var mapid = $("#Map1 option:selected")
+        .attr("id");
+    
+    var werte = [];
+    var result = image[mapid].Result
+
+    for(var i=0; i< result.length;i++){
+     
+    werte.push(result[i].first[0])
+    }
+    sessionStorage.setItem('test', werte);
+    console.log(sessionStorage.getItem('test'));
+    
 }
